@@ -1,0 +1,248 @@
+package io.ncbpfluffybear.flowerpower.multiblocks;
+
+import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
+import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
+import io.ncbpfluffybear.flowerpower.FlowerPowerItems;
+import me.mrCookieSlime.Slimefun.Lists.RecipeType;
+import me.mrCookieSlime.Slimefun.Objects.Category;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
+import org.bukkit.Effect;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.Levelled;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.CauldronLevelChangeEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
+import utils.ItemStackComparator;
+import utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * A multiblock that stores experience displayed
+ * through the cauldron's water level
+ * Also stores the handler for the MagicBasin
+ *
+ * @author NCBPFluffyBear
+ */
+public class ExperienceCauldron extends SlimefunItem implements Listener {
+
+    private static final int EXP_PER_LEVEL = 50;
+    private static final MultiBlockMachine MAGIC_BASIN = (MultiBlockMachine) MagicBasin.BASIN_RECIPE.getMachine();
+
+    public ExperienceCauldron(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+        super(category, item, recipeType, recipe);
+
+        Utils.registerEvents(this);
+    }
+
+    /**
+     * Handles experience deposit/extraction
+     * and the {@link MagicBasin} crafting process
+     * @param e the {@link PlayerRightClickEvent}
+     */
+    @EventHandler(ignoreCancelled = true)
+    private void onCauldronInteract(PlayerRightClickEvent e) {
+
+        // Verify the block is legit
+        Optional<Block> optB = e.getClickedBlock();
+
+        if (!optB.isPresent()) {
+            return;
+        }
+
+        Block b = optB.get();
+
+        // Make sure it's an Experience Cauldron
+        SlimefunItem sfItem = BlockStorage.check(b);
+
+        if (sfItem != null && isItem(sfItem.getItem()) && b.getType() == Material.CAULDRON) {
+
+            // Prevent double interaction
+            if (e.getHand() == EquipmentSlot.OFF_HAND) {
+                return;
+            }
+
+            Player p = e.getPlayer();
+            ItemStack handItem = p.getInventory().getItemInMainHand();
+            Levelled cauldron = ((Levelled) b.getBlockData());
+
+            // Crafting with wand
+            if (SlimefunUtils.isItemSimilar(handItem, FlowerPowerItems.MAGICAL_WAND, false, false)) {
+
+                if (cauldron.getLevel() == 0) {
+                    Utils.send(p, "&cThis Experience Cauldron is out of experience!");
+                    return;
+                }
+
+                List<ItemFrame> itemFrames = new ArrayList<>();
+
+                for (Entity en : b.getWorld().getNearbyEntities(b.getLocation(), 1.5, 1, 1.5)) {
+                    if (en instanceof ItemFrame && itemFrames.size() < 4) {
+                        itemFrames.add((ItemFrame) en);
+                    }
+                }
+
+                if (itemFrames.size() != 4) {
+                    Utils.send(p, "&cYou need 4 item frames on each side of the Experience Cauldron");
+                    return;
+                }
+
+                // Retrieve all items in the itemframes
+                List<ItemStack> frameItems = new ArrayList<>();
+
+                for (ItemFrame frame : itemFrames) {
+                    ItemStack frameItem = frame.getItem();
+                    if (frameItem.getType() != Material.AIR) {
+
+                        SlimefunItem sfFrameItem = SlimefunItem.getByItem(frameItem);
+                        if (sfFrameItem != null) {
+                            // Convert to SlimefunItemStack
+                            frameItems.add(sfFrameItem.getItem());
+                        } else {
+                            frameItems.add(frameItem);
+                        }
+                    }
+                }
+
+                recipeLoop:
+                for (ItemStack[] recipeInputs : RecipeType.getRecipeInputList(MAGIC_BASIN)) {
+
+                    // Build checklists
+                    List<ItemStack> inputItems = new ArrayList<>(frameItems);
+                    List<ItemStack> recipeItems = new ArrayList<>();
+
+                    // Add recipe items
+                    for (ItemStack recipeItem : recipeInputs) {
+                        if (recipeItem != null) {
+                            recipeItems.add(recipeItem);
+                        }
+                    }
+
+                    // Sort the items so they are in the same order
+                    inputItems.sort(new ItemStackComparator());
+                    recipeItems.sort(new ItemStackComparator());
+
+                    if (inputItems.size() == recipeItems.size()) {
+
+                        // Check if the items match
+                        for (int i = inputItems.size() - 1; i >= 0; i--) {
+                            if (SlimefunUtils.isItemSimilar(inputItems.get(i), recipeItems.get(i), false, true)) {
+                                inputItems.remove(i);
+                                recipeItems.remove(i);
+                            } else {
+                                continue recipeLoop;
+                            }
+                        }
+
+                        // Recipe worked
+                        if (inputItems.size() == 0 && recipeItems.size() == 0) {
+                            ItemStack output = RecipeType.getRecipeOutputList(MAGIC_BASIN, recipeInputs);
+
+                            // Clear item frames
+                            for (ItemFrame frame : itemFrames) {
+                                frame.setItem(new ItemStack(Material.AIR));
+                            }
+
+                            // Consume exp from cauldron
+                            changeLevel(b, cauldron, -1);
+
+                            // Drop output
+                            b.getWorld().playSound(b.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 0.5F, 1F);
+
+                            Utils.runSync(() -> {
+                                b.getWorld().playEffect(b.getLocation(), Effect.POTION_BREAK, 1);
+                                b.getWorld().dropItem(b.getLocation().add(0, 1, 0), output);
+                            }, 20);
+
+                            return;
+                        }
+
+                    }
+                }
+
+                // None of the recipes worked
+                Utils.send(p, "&cInvalid Recipe!");
+                return;
+            }
+
+            // Prevent insertion/extraction of other liquids
+            if (handItem.getType() != Material.ITEM_FRAME) {
+                e.cancel();
+            }
+
+            int exp = p.getTotalExperience();
+
+            // Exp requirement
+            if (exp < EXP_PER_LEVEL) {
+                Utils.send(p, "&cYou do not have enough exp to deposit");
+                return;
+            }
+
+            // Retrieve experience from cauldron
+            if (p.isSneaking()) {
+                // Check if cauldron is empty
+                if (cauldron.getLevel() == 0) {
+                    Utils.send(p, "&cThis Experience Cauldron is already empty");
+                    return;
+                }
+
+                // Add exp and decrease cauldron level
+                p.giveExp(EXP_PER_LEVEL);
+                changeLevel(b, cauldron, -1);
+                p.playSound(p.getLocation(), Sound.ITEM_BUCKET_FILL, 1, 0.1f);
+                return;
+            }
+
+            // Insert experience into cauldron
+
+            // Check if cauldron is full
+            if (cauldron.getLevel() == cauldron.getMaximumLevel()) {
+                Utils.send(p, "&cThis Experience Cauldron is full");
+                return;
+            }
+
+            // Remove exp and raise cauldron level
+            p.giveExp(-EXP_PER_LEVEL);
+            changeLevel(b, cauldron, 1);
+            p.playSound(p.getLocation(), Sound.ITEM_BUCKET_FILL, 1, 1);
+        }
+    }
+
+    /**
+     * Prevent changing the cauldron level through
+     * other means
+     * @param e the {@link CauldronLevelChangeEvent}
+     */
+    @EventHandler(ignoreCancelled = true)
+    private void onCauldronLevelChange(CauldronLevelChangeEvent e) {
+        SlimefunItem sfItem = BlockStorage.check(e.getBlock());
+
+        if (sfItem != null && isItem(sfItem.getItem())) {
+            e.setCancelled(true);
+        }
+    }
+
+    /**
+     * Changes the level of a cauldron
+     * @param b the cauldron block
+     * @param cauldron the cauldron
+     * @param i the amount to change it by
+     */
+    private static void changeLevel(Block b, Levelled cauldron, int i) {
+        cauldron.setLevel(cauldron.getLevel() + i);
+        b.setBlockData(cauldron);
+    }
+
+}

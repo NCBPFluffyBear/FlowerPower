@@ -1,20 +1,24 @@
-# Slimefun4 Addon
-This is an example Repository for a generic Slimefun4 Addon.
-In the top left is a button "Use this template", click this to create your own Addon for Slimefun4 using this basic template.
+# Flower Power
+Welcome to Flower Power, a Slimefun4 addon centered around flowers!
 
-## How to create your own addon.
-This is a template repository that you can use to create your own Slimefun4 Addon.<br>
-We have also written an extensive step-by-step tutorial which you can find here:<br>
-https://github.com/Slimefun/Slimefun4/wiki/Developer-Guide
+## Contents:
 
-## Changing some important things
-Navigate to `src/main/java` and rename the package and the .java File to your liking.<br>
-Suggestion: "me.yourname.yourproject" (all lower case) and "ProjectName.java"<br>
-Example: "me.thebusybiscuit.cooladdon" and "CoolAddon.java"
+**Magic Cream:** The start of your Flower Power experience. Dropped by slimes, and required for the most basic recipes.
 
-Navigate to `src/main/resources/plugin.yml` and change the "author" and "main" attributes.
-You may also want to change the description to something meaningful.
+**Magic Basin:** The Multiblock machine used in this addon, used to craft all of the following items.
 
-Navigate to `pom.xml` and change the group id to "me.%Your name%" and change the artifact id to the name of your Project.
+**Experience Cauldron:** A component of the Magic Basin, or can be used as a standalone experience storage option.
 
-After that you are good to go, you can now start developing your own Addon for Slimefun4.
+**Magic Wand:** A magical tool used to start Magic Basin reactions.
+
+**Attribute Charms:** Offhand-held items that provide you with various attribute buffs such as speed, strength, and health boost with randomized intensities.
+
+**Experience Tome:** A magical item that allows players to store massive amounts of experience.
+
+**Overgrowth Charms:** A magical item that creates duplicates of the flower that it is used on.
+
+**Infinity Apple:** A magical item that can be consumed infinitely at the cost of a small amount of experience.
+
+**Infinity Bandage:** A magical item that can be used to heal yourself infinitely at the cost of a small amount of experience.
+
+**Recall Charm:** A magical item that you can bind to a location and use later to teleport back to that location at the cost of a large amount of experience.

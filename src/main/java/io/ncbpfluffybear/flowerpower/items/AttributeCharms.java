@@ -1,12 +1,15 @@
 package io.ncbpfluffybear.flowerpower.items;
 
+import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
 import io.ncbpfluffybear.flowerpower.FlowerPowerPlugin;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.data.PersistentDataAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
@@ -50,6 +53,11 @@ public class AttributeCharms extends SimpleSlimefunItem<ItemUseHandler> implemen
             ItemStack charm = e.getItem();
             ItemMeta charmMeta = charm.getItemMeta();
             Player p = e.getPlayer();
+
+            double min = SlimefunItem.getByItem(charm).getItemSetting("min", Double.class).get().getValue();
+            double max = SlimefunItem.getByItem(charm).getItemSetting("max", Double.class).get().getValue();
+
+            Bukkit.broadcastMessage(min + " " + max);
 
             // Don't reinspect charms
             if (PersistentDataAPI.getByte(charmMeta, inspectedKey, (byte) 0) == 1) {

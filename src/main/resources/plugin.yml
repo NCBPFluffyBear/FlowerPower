@@ -11,7 +11,7 @@ description: A Slimefun4-Addon that adds more magical options
 main: io.ncbpfluffybear.flowerpower.FlowerPowerPlugin
 
 ## You can change this to link to your website or repository. You can also remove this line if you want to.
-website: https://github.com/NCBPFluffyBear/Magic
+website: https://github.com/NCBPFluffyBear/FlowerPower
 
 ## This value is automatically replaced by the version specified in your pom.xml file.
 ## Do not change this.

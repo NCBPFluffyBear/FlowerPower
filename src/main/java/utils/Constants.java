@@ -1,6 +1,7 @@
 package utils;
 
 import io.ncbpfluffybear.flowerpower.FlowerPowerPlugin;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
@@ -15,6 +16,8 @@ import java.util.Set;
 public class Constants {
 
     public Constants() {}
+
+    public static final String SERVER_VERSION = Bukkit.getBukkitVersion();
 
     public static final NamespacedKey GLOW_ENCHANT = new NamespacedKey(FlowerPowerPlugin.getInstance(),
             "flowerpower_glow_enchant");

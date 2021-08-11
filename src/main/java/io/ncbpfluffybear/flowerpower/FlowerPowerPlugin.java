@@ -2,6 +2,8 @@ package io.ncbpfluffybear.flowerpower;
 
 import io.ncbpfluffybear.flowerpower.setup.FlowerPowerItemSetup;
 import io.ncbpfluffybear.flowerpower.setup.ResearchSetup;
+import me.mrCookieSlime.Slimefun.cscorelib2.updater.GitHubBuildsUpdater;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,11 +31,14 @@ public class FlowerPowerPlugin extends JavaPlugin implements SlimefunAddon {
 
         instance = this;
 
+        // bStats Metrics
+        final Metrics metrics = new Metrics(this, 12349);
+
         // Read something from your config.yml
         Config cfg = new Config(this);
 
-        if (cfg.getBoolean("options.auto-update")) {
-            // You could start an Auto-Updater for example
+        if (cfg.getBoolean("options.auto-update") && getDescription().getVersion().startsWith("DEV - ")) {
+            new GitHubBuildsUpdater(this, getFile(), "NCBPFluffyBear/FlowerPower/master/").start();
         }
 
         try {

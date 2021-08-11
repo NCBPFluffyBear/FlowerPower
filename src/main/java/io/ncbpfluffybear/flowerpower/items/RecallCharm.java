@@ -12,6 +12,8 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import utils.Utils;
@@ -40,11 +42,15 @@ public class RecallCharm extends SimpleSlimefunItem<ItemUseHandler> {
     @Override
     public ItemUseHandler getItemHandler() {
         return e -> {
+            e.cancel();
+
+            if (e.getInteractEvent().getAction() == Action.RIGHT_CLICK_BLOCK) {
+                return;
+            }
+
             Player p = e.getPlayer();
             ItemStack charm = e.getItem();
             ItemMeta charmMeta = charm.getItemMeta();
-
-            e.cancel();
 
             // Assign teleport location mode
             if (p.isSneaking()) {
@@ -87,7 +93,8 @@ public class RecallCharm extends SimpleSlimefunItem<ItemUseHandler> {
             // Consume exp and teleport player
             p.giveExp(-TELEPORT_COST);
             p.teleport(new Location(Bukkit.getWorld(UUID.fromString(location[0])),
-                    Integer.parseInt(location[1]), Integer.parseInt(location[2]), Integer.parseInt(location[3])
+                    Integer.parseInt(location[1]) + 0.5, Integer.parseInt(location[2]),
+                    Integer.parseInt(location[3]) + 0.5
             ));
             p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
 

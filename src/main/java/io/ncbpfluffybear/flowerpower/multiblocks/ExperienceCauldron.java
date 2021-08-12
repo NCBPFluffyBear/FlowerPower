@@ -90,6 +90,8 @@ public class ExperienceCauldron extends SlimefunItem implements Listener {
         // Prevent insertion/extraction of other liquids
         if (handItem.getType() != Material.ITEM_FRAME) {
             e.cancel();
+        } else {
+            return;
         }
 
         // Crafting with wand
@@ -135,12 +137,6 @@ public class ExperienceCauldron extends SlimefunItem implements Listener {
 
         int exp = p.getTotalExperience();
 
-        // Exp requirement
-        if (exp < EXP_PER_LEVEL) {
-            Utils.send(p, "&cYou do not have enough exp to deposit");
-            return;
-        }
-
         // Retrieve experience from cauldron
         if (p.isSneaking()) {
             // Check if cauldron is empty
@@ -157,6 +153,11 @@ public class ExperienceCauldron extends SlimefunItem implements Listener {
         }
 
         // Insert experience into cauldron
+        // Exp requirement
+        if (exp < EXP_PER_LEVEL) {
+            Utils.send(p, "&cYou do not have enough exp to deposit");
+            return;
+        }
 
         // Check if cauldron is full
         if (cauldronLevel == MAX_CAULDRON_LEVEL) {

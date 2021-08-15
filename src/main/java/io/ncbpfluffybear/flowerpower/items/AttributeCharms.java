@@ -54,11 +54,6 @@ public class AttributeCharms extends SimpleSlimefunItem<ItemUseHandler> implemen
             ItemMeta charmMeta = charm.getItemMeta();
             Player p = e.getPlayer();
 
-            double min = SlimefunItem.getByItem(charm).getItemSetting("min", Double.class).get().getValue();
-            double max = SlimefunItem.getByItem(charm).getItemSetting("max", Double.class).get().getValue();
-
-            Bukkit.broadcastMessage(min + " " + max);
-
             // Don't reinspect charms
             if (PersistentDataAPI.getByte(charmMeta, inspectedKey, (byte) 0) == 1) {
                 return;

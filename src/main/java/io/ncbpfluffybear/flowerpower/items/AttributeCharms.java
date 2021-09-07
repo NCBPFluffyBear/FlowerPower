@@ -1,15 +1,12 @@
 package io.ncbpfluffybear.flowerpower.items;
 
-import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.data.persistent.PersistentDataAPI;
 import io.ncbpfluffybear.flowerpower.FlowerPowerPlugin;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.data.PersistentDataAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
@@ -39,7 +36,7 @@ public class AttributeCharms extends SimpleSlimefunItem<ItemUseHandler> implemen
 
     private final Charm type;
 
-    public AttributeCharms(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Charm type) {
+    public AttributeCharms(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Charm type) {
         super(category, item, recipeType, recipe);
         this.type = type;
 

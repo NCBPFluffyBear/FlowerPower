@@ -1,13 +1,12 @@
 package io.ncbpfluffybear.flowerpower;
 
-import io.ncbpfluffybear.flowerpower.FlowerPowerPlugin;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.ncbpfluffybear.flowerpower.items.InfinityApple;
 import io.ncbpfluffybear.flowerpower.items.InfinityBandage;
 import io.ncbpfluffybear.flowerpower.items.RecallCharm;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
-import me.mrCookieSlime.Slimefun.cscorelib2.skull.SkullItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -20,8 +19,8 @@ import utils.ItemTags;
  */
 public class FlowerPowerItems {
 
-    public static final Category FLOWERPOWER_CATEGORY = new Category(new NamespacedKey(FlowerPowerPlugin.getInstance(),
-            "flowerpower_category"), new CustomItem(Material.ALLIUM, "&5Flower Power")
+    public static final ItemGroup FLOWERPOWER_CATEGORY = new ItemGroup(new NamespacedKey(FlowerPowerPlugin.getInstance(),
+            "flowerpower_category"), new CustomItemStack(Material.ALLIUM, "&5Flower Power")
     );
     // Multiblocks
     public static final SlimefunItemStack MAGIC_BASIN = new SlimefunItemStack("MAGIC_BASIN",
@@ -197,7 +196,7 @@ public class FlowerPowerItems {
             ItemTags.MAGICAL_ITEM
     );
     public static final SlimefunItemStack INFINITY_APPLE = new SlimefunItemStack("INFINITY_APPLE",
-            new CustomItem(SkullItem.fromHash("99a79d7e5d1ba739ab4471643e744ef781f7c1d4ea52efc99168d6cb5732326")),
+            new CustomItemStack(SlimefunUtils.getCustomHead("99a79d7e5d1ba739ab4471643e744ef781f7c1d4ea52efc99168d6cb5732326")),
             "&eInfinity Apple",
             "",
             "&7&oConverts experience to food",

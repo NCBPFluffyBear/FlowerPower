@@ -1,6 +1,11 @@
 package io.ncbpfluffybear.flowerpower.setup;
 
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.collections.Pair;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.ncbpfluffybear.flowerpower.FlowerPowerItems;
 import io.ncbpfluffybear.flowerpower.FlowerPowerPlugin;
 import io.ncbpfluffybear.flowerpower.items.AttributeCharms;
@@ -13,11 +18,6 @@ import io.ncbpfluffybear.flowerpower.objects.NonplaceableBlock;
 import io.ncbpfluffybear.flowerpower.items.MagicCream;
 import io.ncbpfluffybear.flowerpower.multiblocks.ExperienceCauldron;
 import io.ncbpfluffybear.flowerpower.multiblocks.MagicBasin;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.collections.Pair;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
@@ -37,7 +37,7 @@ import java.util.List;
 public class FlowerPowerItemSetup {
 
     // Placeholder item for magic basin item frames
-    private static final CustomItem basinFrame = new CustomItem(Material.ITEM_FRAME, null,
+    private static final CustomItemStack basinFrame = new CustomItemStack(Material.ITEM_FRAME, null,
             "&7Place on the side of the Experience Cauldron");
     private static final List<Pair<SlimefunItemStack, Material>> allFlowers = new ArrayList<>(Arrays.asList(
             new Pair<>(FlowerPowerItems.GLISTENING_POPPY, Material.POPPY),
@@ -79,7 +79,7 @@ public class FlowerPowerItemSetup {
 
         new MagicCream(FlowerPowerItems.FLOWERPOWER_CATEGORY, FlowerPowerItems.MAGIC_CREAM, RecipeType.MOB_DROP, new ItemStack[]{
                 null, null, null,
-                null, new CustomItem(new ItemStack(Material.SLIME_SPAWN_EGG), "&aSlime", "&7Kill a Slime"), null,
+                null, new CustomItemStack(new ItemStack(Material.SLIME_SPAWN_EGG), "&aSlime", "&7Kill a Slime"), null,
                 null, null, null
         }).register(plugin);
 

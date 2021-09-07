@@ -1,12 +1,12 @@
 package io.ncbpfluffybear.flowerpower.items;
 
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
 import io.ncbpfluffybear.flowerpower.objects.FPNotPlaceable;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -26,7 +26,7 @@ public class InfinityBandage extends SimpleSlimefunItem<ItemUseHandler> implemen
     public static final double HEALTH_PER_CONSUME = 1;
     public static final int EXP_PER_CONSUME = 10;
 
-    public InfinityBandage(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public InfinityBandage(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
     }
 

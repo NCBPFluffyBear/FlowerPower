@@ -1,14 +1,14 @@
 package io.ncbpfluffybear.flowerpower;
 
+import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.GitHubBuildsUpdater;
 import io.ncbpfluffybear.flowerpower.setup.FlowerPowerItemSetup;
 import io.ncbpfluffybear.flowerpower.setup.ResearchSetup;
-import me.mrCookieSlime.Slimefun.cscorelib2.updater.GitHubBuildsUpdater;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import me.mrCookieSlime.Slimefun.cscorelib2.config.Config;
 import utils.Constants;
 import listeners.Events;
 import utils.GlowEnchant;

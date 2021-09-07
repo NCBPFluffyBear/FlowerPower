@@ -1,11 +1,11 @@
 package io.ncbpfluffybear.flowerpower.multiblocks;
 
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.ncbpfluffybear.flowerpower.FlowerPowerPlugin;
 import io.ncbpfluffybear.flowerpower.FlowerPowerItems;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -25,7 +25,7 @@ public class MagicBasin extends MultiBlockMachine {
 
     public static RecipeType BASIN_RECIPE;
 
-    public MagicBasin(Category category, SlimefunItemStack item, ItemStack[] recipe, BlockFace trigger) {
+    public MagicBasin(ItemGroup category, SlimefunItemStack item, ItemStack[] recipe, BlockFace trigger) {
         super(category, item, recipe, trigger);
     }
 

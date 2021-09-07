@@ -1,12 +1,11 @@
 package io.ncbpfluffybear.flowerpower.setup;
 
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.ncbpfluffybear.flowerpower.FlowerPowerItems;
 import io.ncbpfluffybear.flowerpower.FlowerPowerPlugin;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-
-import io.github.thebusybiscuit.slimefun4.core.researching.Research;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 
 /**
  * Registers all of the research

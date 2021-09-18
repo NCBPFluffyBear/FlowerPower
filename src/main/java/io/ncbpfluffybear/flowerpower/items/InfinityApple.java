@@ -34,7 +34,7 @@ public class InfinityApple extends SimpleSlimefunItem<ItemUseHandler> implements
     public ItemUseHandler getItemHandler() {
         return e -> {
             Player p = e.getPlayer();
-            int exp = p.getTotalExperience();
+            int exp = Utils.getTotalExperience(p);
             int foodLevel = p.getFoodLevel();
 
             // Check if player has enough exp

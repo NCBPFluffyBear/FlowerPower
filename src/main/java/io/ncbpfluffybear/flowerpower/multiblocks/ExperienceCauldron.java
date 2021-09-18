@@ -134,7 +134,7 @@ public class ExperienceCauldron extends SlimefunItem implements Listener {
             return;
         }
 
-        int exp = p.getTotalExperience();
+        int exp = Utils.getTotalExperience(p);
 
         // Retrieve experience from cauldron
         if (p.isSneaking()) {

@@ -35,7 +35,7 @@ public class InfinityBandage extends SimpleSlimefunItem<ItemUseHandler> implemen
     public ItemUseHandler getItemHandler() {
         return e -> {
             Player p = e.getPlayer();
-            int exp = p.getTotalExperience();
+            int exp = Utils.getTotalExperience(p);
             double health = p.getHealth();
             double maxHealth = p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
 

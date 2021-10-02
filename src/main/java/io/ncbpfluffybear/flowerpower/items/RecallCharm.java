@@ -4,8 +4,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.data.persistent.PersistentDataAPI;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.ncbpfluffybear.flowerpower.FlowerPowerPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -54,6 +57,11 @@ public class RecallCharm extends SimpleSlimefunItem<ItemUseHandler> {
             // Assign teleport location mode
             if (p.isSneaking()) {
                 Location l = p.getLocation();
+
+                if (!Slimefun.getProtectionManager().hasPermission(p, l.getBlock(), Interaction.INTERACT_BLOCK)) {
+                    Utils.send(p, "You do not have permission to bind your Recall Charm here!");
+                    return;
+                }
 
                 // Store location info into PDC
                 PersistentDataAPI.setString(charmMeta, location, l.getWorld().getUID() + "_" +

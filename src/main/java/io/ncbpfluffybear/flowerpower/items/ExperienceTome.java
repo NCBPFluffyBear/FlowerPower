@@ -91,7 +91,7 @@ public class ExperienceTome extends SlimefunItem implements Listener {
             if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
                 transferExp = Utils.getTotalExperience(p);
             } else {
-                transferExp = EXP_TRANSFER_RATE;
+                transferExp = Math.min(Utils.getTotalExperience(p), EXP_TRANSFER_RATE);
             }
 
             // If overflow, decrease to fill tome

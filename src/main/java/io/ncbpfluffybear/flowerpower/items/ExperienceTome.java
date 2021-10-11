@@ -37,6 +37,12 @@ public class ExperienceTome extends SlimefunItem implements Listener {
 
     @EventHandler
     private void onTomeUse(PlayerInteractEvent e) {
+        Player p = e.getPlayer();
+
+        if (!this.canUse(p, true)) {
+            return;
+        }
+
         ItemStack tome = e.getItem();
 
         // Check if item is a tome
@@ -51,7 +57,6 @@ public class ExperienceTome extends SlimefunItem implements Listener {
         }
 
         ItemMeta tomeMeta = tome.getItemMeta();
-        Player p = e.getPlayer();
         int tomeExp = PersistentDataAPI.getInt(tomeMeta, expAmount, 0);
 
         // Exp extraction

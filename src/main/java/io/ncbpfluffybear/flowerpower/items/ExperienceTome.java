@@ -39,14 +39,14 @@ public class ExperienceTome extends SlimefunItem implements Listener {
     private void onTomeUse(PlayerInteractEvent e) {
         Player p = e.getPlayer();
 
-        if (!this.canUse(p, true)) {
-            return;
-        }
-
         ItemStack tome = e.getItem();
 
         // Check if item is a tome
         if (!isItem(tome)) {
+            return;
+        }
+
+        if (!this.canUse(p, true)) {
             return;
         }
 

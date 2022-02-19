@@ -115,18 +115,13 @@ public class ExperienceCauldron extends SlimefunItem implements Listener {
                 return;
             }
 
-            // Retrieve all items in the itemframes
-            List<ItemStack> frameItems = getFrameItems(itemFrames);
+            // Get crafting output
+            ItemStack output = getOutput(getFrameItems(itemFrames));
 
-            for (ItemStack[] recipeInputs : RecipeType.getRecipeInputList(MAGIC_BASIN)) {
-
-                ItemStack output = checkRecipe(frameItems, recipeInputs);
-
-                if (output == null) {
-                    continue;
-                }
-
+            // A recipe worked!
+            if (output != null) {
                 craft(b, itemFrames, output);
+                return;
             }
 
             // None of the recipes worked
@@ -295,6 +290,20 @@ public class ExperienceCauldron extends SlimefunItem implements Listener {
         }
 
         // Recipe sizes did not match
+        return null;
+    }
+
+    private ItemStack getOutput(List<ItemStack> frameItems) {
+        for (ItemStack[] recipeInputs : RecipeType.getRecipeInputList(MAGIC_BASIN)) {
+
+            ItemStack output = checkRecipe(frameItems, recipeInputs);
+
+            // Structured this way to return first valid recipe in case of duplicates
+            if (output != null) {
+                return output;
+            }
+        }
+
         return null;
     }
 

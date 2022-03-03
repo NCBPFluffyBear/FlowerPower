@@ -59,7 +59,7 @@ public class AttributeCharms extends SimpleSlimefunItem<ItemUseHandler> implemen
             // Add specified attribute to offhand
             double level = ThreadLocalRandom.current().nextDouble(type.minLvl, type.maxLvl);
             AttributeModifier modifier = new AttributeModifier(UUID.randomUUID(), type.attribute.getKey().getKey(),
-                    level, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND);
+                    level, type.operation, EquipmentSlot.OFF_HAND);
             charmMeta.addAttributeModifier(type.attribute, modifier);
 
             // Update lore
@@ -78,20 +78,22 @@ public class AttributeCharms extends SimpleSlimefunItem<ItemUseHandler> implemen
 
     public enum Charm {
 
-        MOVEMENT_SPEED(Attribute.GENERIC_MOVEMENT_SPEED, 0.01, 0.2),
-        ATTACK_SPEED(Attribute.GENERIC_ATTACK_SPEED, 0.1, 0.5),
-        FLY_SPEED(Attribute.GENERIC_FLYING_SPEED, 0.01, 0.3),
-        DAMAGE(Attribute.GENERIC_ATTACK_DAMAGE, 0.01, 0.5),
-        MAX_HEALTH(Attribute.GENERIC_MAX_HEALTH, 1, 5);
+        MOVEMENT_SPEED(Attribute.GENERIC_MOVEMENT_SPEED, 0.01, 0.2, AttributeModifier.Operation.MULTIPLY_SCALAR_1),
+        ATTACK_SPEED(Attribute.GENERIC_ATTACK_SPEED, 0.1, 0.5, AttributeModifier.Operation.MULTIPLY_SCALAR_1),
+        FLY_SPEED(Attribute.GENERIC_FLYING_SPEED, 0.01, 1, AttributeModifier.Operation.MULTIPLY_SCALAR_1),
+        DAMAGE(Attribute.GENERIC_ATTACK_DAMAGE, 0.01, 1, AttributeModifier.Operation.MULTIPLY_SCALAR_1),
+        MAX_HEALTH(Attribute.GENERIC_MAX_HEALTH, 1, 5, AttributeModifier.Operation.ADD_NUMBER);
 
         private final Attribute attribute;
         private final double minLvl;
         private final double maxLvl;
+        private final AttributeModifier.Operation operation;
 
-        Charm(Attribute attribute, double minLvl, double maxLvl) {
+        Charm(Attribute attribute, double minLvl, double maxLvl, AttributeModifier.Operation operation) {
             this.attribute = attribute;
             this.minLvl = minLvl;
             this.maxLvl = maxLvl;
+            this.operation = operation;
         }
     }
 }

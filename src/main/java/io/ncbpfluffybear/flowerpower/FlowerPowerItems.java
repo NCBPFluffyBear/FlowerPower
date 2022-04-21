@@ -183,6 +183,15 @@ public class FlowerPowerItems {
             "",
             ItemTags.MAGICAL_ITEM
     );
+    public static final SlimefunItemStack KNOCKBACK_RESISTANCE_CHARM = new SlimefunItemStack("KNOCKBACK_RESISTANCE_CHARM",
+            Material.SUGAR,
+            "&7Knockback Resistance Charm",
+            "",
+            "&eRight click &cto inspect this charm",
+            "&7&oHold this charm in your offhand to receive less knockback",
+            "",
+            ItemTags.MAGICAL_ITEM
+    );
     public static final SlimefunItemStack EXPERIENCE_TOME = new SlimefunItemStack("EXPERIENCE_TOME",
             Material.ENCHANTED_BOOK,
             "&eExperience Tome &a(0 / 1000000)",

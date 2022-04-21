@@ -49,6 +49,7 @@ public class FlowerPowerItemSetup {
     private static final ItemStack speedPotion = new ItemStack(Material.POTION);
     private static final ItemStack damagePotion = new ItemStack(Material.POTION);
     private static final ItemStack healthPotion = new ItemStack(Material.POTION);
+    private static final ItemStack slownessPotion = new ItemStack(Material.POTION);
 
     private FlowerPowerItemSetup() {
     }
@@ -153,6 +154,12 @@ public class FlowerPowerItemSetup {
                 null, null, null
         }, AttributeCharms.Charm.MAX_HEALTH).register(plugin);
 
+        new AttributeCharms(FlowerPowerItems.FLOWERPOWER_CATEGORY, FlowerPowerItems.KNOCKBACK_RESISTANCE_CHARM, MagicBasin.BASIN_RECIPE, new ItemStack[]{
+                FlowerPowerItems.PURPLE_CRYSTAL, slownessPotion, SlimefunItems.TALISMAN_TRAVELLER,
+                getItem(Material.NETHER_STAR), null, null,
+                null, null, null
+        }, AttributeCharms.Charm.KNOCKBACK_RESISTANCE).register(plugin);
+
         new ExperienceTome(FlowerPowerItems.FLOWERPOWER_CATEGORY, FlowerPowerItems.EXPERIENCE_TOME, MagicBasin.BASIN_RECIPE, new ItemStack[]{
                 getItem(Material.WRITABLE_BOOK), FlowerPowerItems.EXPERIENCE_CAULDRON, SlimefunItems.ENCHANTMENT_RUNE,
                 getItem(Material.NETHER_STAR), null, null,
@@ -191,11 +198,15 @@ public class FlowerPowerItemSetup {
 
         PotionMeta damagePotionMeta = (PotionMeta) damagePotion.getItemMeta();
         damagePotionMeta.setBasePotionData(new PotionData(PotionType.STRENGTH, false, true));
-        damagePotion.setItemMeta(speedPotionMeta);
+        damagePotion.setItemMeta(damagePotionMeta);
 
         PotionMeta healthPotionMeta = (PotionMeta) healthPotion.getItemMeta();
         healthPotionMeta.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, true));
-        healthPotion.setItemMeta(speedPotionMeta);
+        healthPotion.setItemMeta(healthPotionMeta);
+
+        PotionMeta slownessPotionMeta = (PotionMeta) slownessPotion.getItemMeta();
+        slownessPotionMeta.setBasePotionData(new PotionData(PotionType.SLOWNESS, false, true));
+        slownessPotion.setItemMeta(slownessPotionMeta);
 
     }
 

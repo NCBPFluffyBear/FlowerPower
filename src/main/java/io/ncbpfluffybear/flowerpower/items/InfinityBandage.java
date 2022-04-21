@@ -7,6 +7,9 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
 import io.ncbpfluffybear.flowerpower.objects.FPNotPlaceable;
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -25,6 +28,7 @@ public class InfinityBandage extends SimpleSlimefunItem<ItemUseHandler> implemen
 
     public static final double HEALTH_PER_CONSUME = 1;
     public static final int EXP_PER_CONSUME = 10;
+    private final Map<Player, Long> cooldowns = new HashMap<>();
 
     public InfinityBandage(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
@@ -35,6 +39,13 @@ public class InfinityBandage extends SimpleSlimefunItem<ItemUseHandler> implemen
     public ItemUseHandler getItemHandler() {
         return e -> {
             Player p = e.getPlayer();
+
+            long cooldown = cooldowns.getOrDefault(p, 0L);
+            if (cooldown + 500L >= System.currentTimeMillis()) {
+                Utils.send(p, "&cThis item is on cooldown!");
+                return;
+            }
+
             int exp = Utils.getTotalExperience(p);
             double health = p.getHealth();
             double maxHealth = p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
@@ -58,6 +69,7 @@ public class InfinityBandage extends SimpleSlimefunItem<ItemUseHandler> implemen
                 newHealth = maxHealth;
             }
             p.setHealth(newHealth);
+            cooldowns.put(p, System.currentTimeMillis());
 
             p.playSound(p.getLocation(), Sound.ENTITY_CAT_HISS, 1, 1);
 

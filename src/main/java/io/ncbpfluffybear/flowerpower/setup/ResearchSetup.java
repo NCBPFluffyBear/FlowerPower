@@ -27,7 +27,7 @@ public final class ResearchSetup {
         register("experience_storage", 2714, "Experience Storage", 50, FlowerPowerItems.EXPERIENCE_TOME);
         register("attribute_charms", 2715, "Attribute Charms", 50, FlowerPowerItems.MOVEMENT_SPEED_CHARM,
                 FlowerPowerItems.ATTACK_SPEED_CHARM, FlowerPowerItems.FLY_SPEED_CHARM, FlowerPowerItems.DAMAGE_CHARM,
-                FlowerPowerItems.HEALTH_CHARM
+                FlowerPowerItems.HEALTH_CHARM, FlowerPowerItems.KNOCKBACK_RESISTANCE_CHARM
         );
         register("recall_teleportation", 2716, "Recall Teleportation", 30, FlowerPowerItems.RECALL_CHARM);
         register("infinity_magic", 2717, "Infinity Magic", 30, FlowerPowerItems.INFINITY_APPLE, FlowerPowerItems.INFINITY_BANDAGE);

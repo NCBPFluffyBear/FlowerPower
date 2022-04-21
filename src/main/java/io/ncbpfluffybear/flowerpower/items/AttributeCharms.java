@@ -1,7 +1,9 @@
 package io.ncbpfluffybear.flowerpower.items;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.items.settings.DoubleRangeSetting;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
@@ -34,12 +36,19 @@ public class AttributeCharms extends SimpleSlimefunItem<ItemUseHandler> implemen
     private static final NamespacedKey inspectedKey = new NamespacedKey(FlowerPowerPlugin.getInstance(), "inspected");
     private static final int LORE_INDEX = 1;
 
+    private final ItemSetting<Double> minLevel;
+    private final ItemSetting<Double> maxLevel;
+
     private final Charm type;
 
     public AttributeCharms(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Charm type) {
         super(category, item, recipeType, recipe);
         this.type = type;
 
+        minLevel = new DoubleRangeSetting(this, "min-level", 0, type.minLvl, Double.MAX_VALUE);
+        maxLevel = new DoubleRangeSetting(this, "max-level", 0, type.maxLvl, Double.MAX_VALUE);
+
+        addItemSetting(minLevel, maxLevel);
         Utils.registerEvents(this);
     }
 
@@ -57,7 +66,7 @@ public class AttributeCharms extends SimpleSlimefunItem<ItemUseHandler> implemen
             }
 
             // Add specified attribute to offhand
-            double level = ThreadLocalRandom.current().nextDouble(type.minLvl, type.maxLvl);
+            double level = ThreadLocalRandom.current().nextDouble(minLevel.getValue(), maxLevel.getValue());
             AttributeModifier modifier = new AttributeModifier(UUID.randomUUID(), type.attribute.getKey().getKey(),
                     level, type.operation, EquipmentSlot.OFF_HAND);
             charmMeta.addAttributeModifier(type.attribute, modifier);
@@ -82,7 +91,8 @@ public class AttributeCharms extends SimpleSlimefunItem<ItemUseHandler> implemen
         ATTACK_SPEED(Attribute.GENERIC_ATTACK_SPEED, 0.1, 0.5, AttributeModifier.Operation.MULTIPLY_SCALAR_1),
         FLY_SPEED(Attribute.GENERIC_FLYING_SPEED, 0.01, 1, AttributeModifier.Operation.MULTIPLY_SCALAR_1),
         DAMAGE(Attribute.GENERIC_ATTACK_DAMAGE, 0.01, 1, AttributeModifier.Operation.MULTIPLY_SCALAR_1),
-        MAX_HEALTH(Attribute.GENERIC_MAX_HEALTH, 1, 5, AttributeModifier.Operation.ADD_NUMBER);
+        MAX_HEALTH(Attribute.GENERIC_MAX_HEALTH, 1, 5, AttributeModifier.Operation.ADD_NUMBER),
+        KNOCKBACK_RESISTANCE(Attribute.GENERIC_KNOCKBACK_RESISTANCE, 0.1, 0.5, AttributeModifier.Operation.ADD_NUMBER);
 
         private final Attribute attribute;
         private final double minLvl;

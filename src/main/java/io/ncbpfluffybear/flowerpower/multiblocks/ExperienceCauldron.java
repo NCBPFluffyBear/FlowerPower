@@ -228,7 +228,7 @@ public class ExperienceCauldron extends SlimefunItem implements Listener {
     }
 
     private static boolean useNewCauldrons() {
-        return Constants.SERVER_VERSION.contains("1.17") || Constants.SERVER_VERSION.contains("1.18") || Constants.SERVER_VERSION.contains("1.19");
+        return Constants.SERVER_VERSION.contains("1.17") || Constants.SERVER_VERSION.contains("1.18") || Constants.SERVER_VERSION.contains("1.19") || Constants.SERVER_VERSION.contains("1.20");
     }
 
     /**

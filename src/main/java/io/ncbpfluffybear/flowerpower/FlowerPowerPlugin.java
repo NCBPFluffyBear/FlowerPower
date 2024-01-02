@@ -9,9 +9,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import utils.Constants;
 import listeners.Events;
-import utils.GlowEnchant;
 import utils.Utils;
 
 import javax.annotation.Nonnull;
@@ -41,18 +39,6 @@ public class FlowerPowerPlugin extends JavaPlugin implements SlimefunAddon {
             new GitHubBuildsUpdater(this, getFile(), "NCBPFluffyBear/FlowerPower/master/").start();
         }
 
-        try {
-            if (!Enchantment.isAcceptingRegistrations()) {
-                Field accepting = Enchantment.class.getDeclaredField("acceptingNew");
-                accepting.setAccessible(true);
-                accepting.set(null, true);
-            }
-        } catch (IllegalAccessException | NoSuchFieldException ignored) {
-            getLogger().warning("Failed to register enchantment.");
-        }
-
-        registerGlow();
-
         // Register events
         Utils.registerEvents(new Events());
 
@@ -61,18 +47,6 @@ public class FlowerPowerPlugin extends JavaPlugin implements SlimefunAddon {
 
         // Register all researches
         ResearchSetup.setup();
-    }
-
-    private void registerGlow() {
-        Enchantment glowEnchant = new GlowEnchant(Constants.GLOW_ENCHANT, new String[] {
-                "GLISTENING_POPPY", "GLISTENING_DANDELION", "GLISTENING_OXEYE_DAISY", "GLISTENING_ALLIUM",
-                "OVERGROWTH_SEED", "INFINITY_BANDAGE", "RECALL_CHARM"
-        });
-
-        // Prevent double-registration errors
-        if (Enchantment.getByKey(glowEnchant.getKey()) == null) {
-            Enchantment.registerEnchantment(glowEnchant);
-        }
     }
 
     @Override

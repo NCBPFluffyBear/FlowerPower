@@ -19,9 +19,6 @@ public class Constants {
 
     public static final String SERVER_VERSION = Bukkit.getBukkitVersion();
 
-    public static final NamespacedKey GLOW_ENCHANT = new NamespacedKey(FlowerPowerPlugin.getInstance(),
-            "flowerpower_glow_enchant");
-
     public static final Set<Material> flowers = new LinkedHashSet<>(Arrays.asList(
             Material.POPPY, Material.DANDELION, Material.OXEYE_DAISY, Material.ALLIUM));
 

@@ -10,6 +10,8 @@ import io.ncbpfluffybear.flowerpower.items.RecallCharm;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.meta.ItemMeta;
 import utils.Constants;
 import utils.ItemTags;
 
@@ -242,18 +244,21 @@ public class FlowerPowerItems {
             ItemTags.MAGICAL_ITEM
     );
 
-
-    private static final Enchantment glowEnchant = Enchantment.getByKey(Constants.GLOW_ENCHANT);
-
     static {
-        GLISTENING_POPPY.addEnchantment(glowEnchant, 1);
-        GLISTENING_DANDELION.addEnchantment(glowEnchant, 1);
-        GLISTENING_OXEYE_DAISY.addEnchantment(glowEnchant, 1);
-        GLISTENING_ALLIUM.addEnchantment(glowEnchant, 1);
+        addGlow(GLISTENING_POPPY);
+        addGlow(GLISTENING_DANDELION);
+        addGlow(GLISTENING_OXEYE_DAISY);
+        addGlow(GLISTENING_ALLIUM);
+        addGlow(OVERGROWTH_SEED);
+        addGlow(INFINITY_BANDAGE);
+        addGlow(RECALL_CHARM);
+    }
 
-        OVERGROWTH_SEED.addEnchantment(glowEnchant, 1);
-        INFINITY_BANDAGE.addEnchantment(glowEnchant, 1);
-        RECALL_CHARM.addEnchantment(glowEnchant, 1);
+    private static void addGlow(SlimefunItemStack item) {
+        item.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        item.setItemMeta(meta);
     }
 
 
